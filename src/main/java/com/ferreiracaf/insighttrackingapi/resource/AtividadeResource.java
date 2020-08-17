@@ -32,15 +32,7 @@ public class AtividadeResource {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-//    @JsonView(Views.UsuarioAtividades.class)
     @GetMapping
-//    public ResponseEntity<Page<Atividade>> listarAtividades(AtividadeFilter atividadeFilter, Pageable pageable){
-//        Page<Atividade> atividadesBuscadas = atividadeService.listarTodos(atividadeFilter, pageable);
-//        if (!atividadesBuscadas.isEmpty()){
-//            return ResponseEntity.ok(atividadesBuscadas);
-//        }
-//        return ResponseEntity.noContent().build();
-//    }
     public ResponseEntity<Page<AtividadeDTO>> listarAtividades(AtividadeFilter atividadeFilter, Pageable pageable){
         Page<Atividade> atividadesBuscadas = atividadeService.listarTodos(atividadeFilter, pageable);
         if (!atividadesBuscadas.isEmpty()){
@@ -54,12 +46,7 @@ public class AtividadeResource {
         return ResponseEntity.noContent().build();
     }
 
-//    @JsonView(Views.UsuarioAtividades.class)
     @GetMapping("/{id}")
-//    public ResponseEntity<Atividade> buscarAtividadePorId(@PathVariable Long id){
-//        Atividade atividade = atividadeService.buscarPorCodigo(id);
-//        return atividade != null ? ResponseEntity.ok(atividade) : ResponseEntity.noContent().build();
-//    }
     public ResponseEntity<AtividadeDTO> buscarAtividadePorId(@PathVariable Long id){
         Atividade atividade = atividadeService.buscarPorCodigo(id);
         return atividade != null ? ResponseEntity.ok(new AtividadeDTO(atividade)) : ResponseEntity.noContent().build();

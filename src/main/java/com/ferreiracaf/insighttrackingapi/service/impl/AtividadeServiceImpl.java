@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,10 @@ public class AtividadeServiceImpl implements AtividadeService {
     public Atividade atualizarAtividade(Long id, Atividade atividade) {
         Optional<Atividade> byId = atividadeRepository.findById(id);
         if (byId.isPresent()){
-            BeanUtils.copyProperties(atividade, byId.get(), Atividade_.ID);
+            String[] ignore = new String[2];
+            ignore[0] = Atividade_.ID;
+            ignore[1] = Atividade_.USUARIO;
+            BeanUtils.copyProperties(atividade, byId.get(), ignore);
             return atividadeRepository.save(byId.get());
         }
         throw new EmptyResultDataAccessException(1);
