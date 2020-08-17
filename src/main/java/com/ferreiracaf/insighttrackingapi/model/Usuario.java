@@ -1,11 +1,16 @@
 package com.ferreiracaf.insighttrackingapi.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ferreiracaf.insighttrackingapi.view.Views;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "usuario")
+@JsonView(Views.UsuarioAtividades.class)
 public class Usuario {
 
     @Id
@@ -19,8 +24,11 @@ public class Usuario {
     private String email;
     private String telefone;
 
-//    @OneToMany(mappedBy = "usuario")
-//    private List<Atividade> atividades;
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Atividade> atividades;
+
+    public Usuario() {
+    }
 
     public String getCpf() {
         return cpf;
@@ -60,6 +68,14 @@ public class Usuario {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public List<Atividade> getAtividades() {
+        return atividades;
+    }
+
+    public void setAtividades(List<Atividade> atividades) {
+        this.atividades = atividades;
     }
 
     @Override

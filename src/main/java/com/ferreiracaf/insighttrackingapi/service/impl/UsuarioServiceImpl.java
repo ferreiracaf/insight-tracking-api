@@ -1,8 +1,12 @@
 package com.ferreiracaf.insighttrackingapi.service.impl;
 
+import com.ferreiracaf.insighttrackingapi.model.Atividade;
 import com.ferreiracaf.insighttrackingapi.model.Usuario;
 import com.ferreiracaf.insighttrackingapi.model.Usuario_;
+import com.ferreiracaf.insighttrackingapi.repository.AtividadeRepository;
 import com.ferreiracaf.insighttrackingapi.repository.UsuarioRepository;
+import com.ferreiracaf.insighttrackingapi.repository.filter.AtividadeFilter;
+import com.ferreiracaf.insighttrackingapi.service.AtividadeService;
 import com.ferreiracaf.insighttrackingapi.service.UsuarioService;
 import com.ferreiracaf.insighttrackingapi.service.exception.RecursoInexistenteException;
 import com.ferreiracaf.insighttrackingapi.service.exception.UsuarioJaExistenteException;
@@ -10,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +24,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private AtividadeService atividadeService;
 
     public List<Usuario> listarTodos(){
         return usuarioRepository.findAll();
@@ -30,7 +38,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         throw new UsuarioJaExistenteException();
     }
 
-    // TODO: Verificar oq acontece aqui
     public Usuario buscarUsuarioPorCpf(String cpf){
         Optional<Usuario> byId = usuarioRepository.findByCpf(cpf);
         if (byId.isPresent())
@@ -38,7 +45,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         throw new RecursoInexistenteException();
     }
 
-    // TODO: verificar se atualiza
     public Usuario atualizarUsuario(String cpf, Usuario usuario){
         Optional<Usuario> byId = usuarioRepository.findByCpf(cpf);
         if (byId.isPresent()){
@@ -48,10 +54,17 @@ public class UsuarioServiceImpl implements UsuarioService {
         throw new RecursoInexistenteException();
     }
 
+    @Transactional
     public void apagarUsuario(String cpf){
         Optional<Usuario> byId = usuarioRepository.findByCpf(cpf);
-        if (byId.isPresent())
+        if (byId.isPresent()) {
+            List<Atividade> atividadesList = atividadeService.getAtividadesList();
+            for (Atividade atividade: atividadesList){
+                if (atividade.getUsuario().getCpf().equalsIgnoreCase(cpf))
+                    atividadeService.removerAtividade(atividade.getId());
+            }
             usuarioRepository.deleteByCpf(cpf);
-        throw new EmptyResultDataAccessException(1);
+        }
+        else throw new EmptyResultDataAccessException(1);
     }
 }

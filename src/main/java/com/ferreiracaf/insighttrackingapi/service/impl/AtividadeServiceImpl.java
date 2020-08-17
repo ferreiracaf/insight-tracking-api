@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,10 @@ public class AtividadeServiceImpl implements AtividadeService {
     @Override
     public Page<Atividade> listarTodos(AtividadeFilter atividadeFilter, Pageable pageable) {
         return atividadeRepository.filtrar(atividadeFilter, pageable);
+    }
+
+    public List<Atividade> getAtividadesList(){
+        return atividadeRepository.findAll();
     }
 
     @Override

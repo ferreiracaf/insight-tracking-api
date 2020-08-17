@@ -1,8 +1,10 @@
 package com.ferreiracaf.insighttrackingapi.service.impl;
 
+import com.ferreiracaf.insighttrackingapi.model.Atividade;
 import com.ferreiracaf.insighttrackingapi.model.Categoria;
 import com.ferreiracaf.insighttrackingapi.model.Categoria_;
 import com.ferreiracaf.insighttrackingapi.repository.CategoriaRepository;
+import com.ferreiracaf.insighttrackingapi.service.AtividadeService;
 import com.ferreiracaf.insighttrackingapi.service.CategoriaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private AtividadeService atividadeService;
 
     @Override
     public List<Categoria> listarTodos() {
@@ -48,6 +53,15 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public void removerCategoria(Long id) {
+        Optional<Categoria> byId =categoriaRepository.findById(id);
+        if (byId.isPresent()){
+            List<Atividade> atividadesList = atividadeService.getAtividadesList();
+            for (Atividade atividade: atividadesList){
+                if (atividade.getCategoria().getId().equals(id))
+                    atividadeService.removerAtividade(atividade.getId());
+            }
         categoriaRepository.deleteById(id);
+        }
+        else throw new EmptyResultDataAccessException(1);
     }
 }

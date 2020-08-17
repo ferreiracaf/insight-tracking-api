@@ -1,5 +1,8 @@
 package com.ferreiracaf.insighttrackingapi.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ferreiracaf.insighttrackingapi.view.Views;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -7,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "categoria")
+@JsonView(Views.UsuarioAtividades.class)
 public class Categoria {
 
     @Id

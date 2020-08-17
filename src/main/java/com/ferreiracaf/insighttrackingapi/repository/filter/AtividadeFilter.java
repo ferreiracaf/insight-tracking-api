@@ -6,6 +6,8 @@ public class AtividadeFilter {
 
     private String descricao;
 
+    private String cpfUsuario;
+
     public String getNome() {
         return nome;
     }
@@ -20,5 +22,13 @@ public class AtividadeFilter {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getCpfUsuario() {
+        return cpfUsuario;
+    }
+
+    public void setCpfUsuario(String cpfUsuario) {
+        this.cpfUsuario = cpfUsuario;
     }
 }

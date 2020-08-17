@@ -44,12 +44,12 @@ public class AtividadeRepositoryQueryImpl implements AtividadeRepositoryQuery{
         List<Predicate> predicates = new ArrayList<>();
         if (!StringUtils.isEmpty(atividadeFilter.getNome())){
             predicates.add(builder.like(
-                    builder.lower(root.get(Atividade_.NOME)), "%" + atividadeFilter.getNome().toLowerCase() + "%"
+                    builder.lower(root.get(Atividade_.nome)), "%" + atividadeFilter.getNome().toLowerCase() + "%"
             ));
         }
         if (!StringUtils.isEmpty(atividadeFilter.getDescricao())) {
             predicates.add(builder.like(
-                    builder.lower(root.get(Atividade_.DESCRICAO)), "%" + atividadeFilter.getDescricao().toLowerCase() + "%"
+                    builder.lower(root.get(Atividade_.descricao)), "%" + atividadeFilter.getDescricao().toLowerCase() + "%"
             ));
         }
         return predicates.toArray(new Predicate[predicates.size()]);

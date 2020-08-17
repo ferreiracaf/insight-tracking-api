@@ -1,5 +1,8 @@
 package com.ferreiracaf.insighttrackingapi.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ferreiracaf.insighttrackingapi.view.Views;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -10,16 +13,23 @@ public class Atividade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @JsonView(Views.UsuarioAtividades.class)
     private Long id;
+
     @NotNull
+//    @JsonView(Views.UsuarioAtividades.class)
     private String nome;
 
+//    @JsonView(Views.UsuarioAtividades.class)
     private String descricao;
+
+//    @JsonView(Views.UsuarioAtividades.class)
     private String observacao;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "id_categoria")
+//    @JsonView(Views.UsuarioAtividades.class)
     private Categoria categoria;
 
     @NotNull

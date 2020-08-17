@@ -1,8 +1,12 @@
 package com.ferreiracaf.insighttrackingapi.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ferreiracaf.insighttrackingapi.view.Views;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
+@JsonView(Views.UsuarioAtividades.class)
 public class Endereco {
     private String logradouro;
     private String numero;
