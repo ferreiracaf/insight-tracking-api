@@ -10,7 +10,7 @@ CREATE TABLE usuario (
     estado VARCHAR(20),
     email VARCHAR(50) NOT NULL,
     telefone VARCHAR(20)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+) ;
 
 INSERT INTO usuario (cpf, nome, logradouro, numero, complemento, bairro, cep, cidade, estado, email, telefone)
     values ('699.654.258-89', 'Carlos Ferreira', 'Rua Doutor Placido Castelo', '633', 'Apartamento 503', 'Centro', '63.900-000', 'Quixadá', 'Ceará', 'carlos123@email.com', '(88) 9 4865-5487');

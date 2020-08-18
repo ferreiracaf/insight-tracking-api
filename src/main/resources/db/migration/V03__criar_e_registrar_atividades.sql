@@ -1,5 +1,5 @@
 CREATE TABLE atividade (
-	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	id SERIAL PRIMARY KEY,
 	nome VARCHAR(50) NOT NULL,
     descricao VARCHAR(150),
 	observacao VARCHAR(100),
@@ -7,7 +7,7 @@ CREATE TABLE atividade (
 	cpf_usuario VARCHAR(15) NOT NULL,
 	FOREIGN KEY (id_categoria) REFERENCES categoria(id),
 	FOREIGN KEY (cpf_usuario) REFERENCES usuario(cpf)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+);
 
 INSERT INTO atividade (nome, descricao, observacao, id_categoria, cpf_usuario) values ('Curso FullStack', 'Curso da AlgaWorks', null, 1, '699.654.258-89');
 INSERT INTO atividade (nome, descricao, observacao, id_categoria, cpf_usuario) values ('Linux Embarcado', 'Minicurso apresentado na UFC', 'Curso ministrado para as turmas de Engenharia de Computação do primeiro semestre', 3, '123.456.789-44');
